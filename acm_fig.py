@@ -39,20 +39,32 @@ def create_figure(width_fraction=1.0, aspect_ratio=0.75, use_textwidth=False, su
     base_width = TEXTWIDTH if use_textwidth else COLWIDTH
     width = base_width * width_fraction
     height = width * aspect_ratio
-    #fig, ax = plt.subplots(figsize=(width, height))
-    fig = plt.figure(figsize=(width,height))
-    fig.subplots_adjust(left=0.12, right=0.96, bottom=0.12, top=0.98)
+    fig = plt.figure(figsize=(width,height),layout='constrained')
     if subplots is not None:
         axs = [fig.add_subplot(sp[0],sp[1],sp[2]) for sp in subplots]
         return fig, axs
     return fig
 
-def add_legend(ax, loc='lower right'):
-    ax.legend(loc=loc,
+def create_figure_wh(width_fraction=1.0, height_fraction=1.0, use_textwidth=False, subplots=None):
+    """Create figure at final display size"""
+    base_width = TEXTWIDTH if use_textwidth else COLWIDTH
+    width = base_width * width_fraction
+    height = base_width * height_fraction
+    fig = plt.figure(figsize=(width,height),layout='constrained')
+    if subplots is not None:
+        axs = [fig.add_subplot(sp[0],sp[1],sp[2]) for sp in subplots]
+        return fig, axs
+    return fig
+
+
+def add_legend(ax, loc='lower right', in_layout=True):
+    leg = ax.legend(loc=loc,
                frameon=True,
                facecolor='white', 
-               framealpha=1.0,        # Change from 0.0 to 1.0 for opaque background
-               edgecolor='black',      # Black outline
-               borderpad=0.3,          # Minimal padding between text and box edge
-               labelspacing=0.3,       # Minimal vertical spacing between entries
-               handletextpad=0.5)      # Spacing between marker and text
+               framealpha=1.0,
+               edgecolor='black',
+               borderpad=0.3,
+               labelspacing=0.3,
+               handletextpad=0.5)
+    leg.set_in_layout(in_layout)
+    return leg
