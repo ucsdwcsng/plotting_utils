@@ -25,7 +25,7 @@ fix = create_figure_wh(1.0, 0.3, use_textwidth=False)
 # you can add subplots like normal
 ax = fig.add_subplot()
 
-# I have also added a function for 
+# I have also added a function to get a nicer looking legend, but the default ax.legend() works as well.
 add_legend(ax, loc='lower right')
 
 ```
